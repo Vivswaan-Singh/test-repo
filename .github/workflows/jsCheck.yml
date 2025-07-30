@@ -1,0 +1,59 @@
+name: Deploy Contract with Manual Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      address:
+        description: 'Deployer Wallet Address (e.g., 0xYourDeployerAddress)'
+        required: true
+        type: string
+      rpcUrl:
+        description: 'Ethereum RPC URL (e.g., https://mainnet.infura.io/v3/YOUR_PROJECT_ID)'
+        required: true
+        type: string
+      weth09Address:
+        description: 'WETH09 Contract Address (e.g., 0xC02aaA39B223FE8D0A0e5C4F27EAD9083C756Cc2)'
+        required: true
+        type: string
+      nativeSymbol:
+        description: 'Native Currency Symbol (e.g., ETH, MATIC, BNB)'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Or your preferred Node.js version (e.g., '18', '22')
+
+      - name: Install dependencies
+        run: npm install ethers # Make sure ethers is listed in your package.json dependencies
+        working-directory: scripts # If your package.json is in scripts/, otherwise adjust
+
+      - name: Run deployContract function
+        run: |
+          node -e "
+            import { deployContract } from './scripts/deploy.js';
+            const address = process.env.INPUT_ADDRESS;
+            const rpcUrl = process.env.INPUT_RPCURL;
+            const weth09Address = process.env.INPUT_WETH09ADDRESS;
+            const nativeSymbol = process.env.INPUT_NATIVESYMBOL;
+
+            deployContract(address, rpcUrl, weth09Address, nativeSymbol)
+              .then(() => console.log('Deployment script finished.'))
+              .catch(error => {
+                console.error('Deployment script failed:', error);
+                process.exit(1);
+              });
+          "
+        env:
+          INPUT_ADDRESS: ${{ github.event.inputs.address }}
+          INPUT_RPCURL: ${{ github.event.inputs.rpcUrl }}
+          INPUT_WETH09ADDRESS: ${{ github.event.inputs.weth09Address }}
+          INPUT_NATIVESYMBOL: ${{ github.event.inputs.nativeSymbol }}
