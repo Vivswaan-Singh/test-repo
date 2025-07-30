@@ -46,7 +46,6 @@ jobs:
         run: npm install
 
       # 4. Create a temporary runner script to execute the deployment function
-      # This approach avoids modifying your source files just to pass arguments.
       - name: Create Runner Script
         run: |
           cat <<EOF > ./runner.ts
@@ -71,10 +70,10 @@ jobs:
           });
           EOF
 
-      # 5. Run the TypeScript script using ts-node
-      # The inputs are passed securely as environment variables.
+      # 5. Run the TypeScript script using the ts-node ESM loader
+      # This command explicitly tells Node.js how to handle .ts files in a module environment.
       - name: Execute Deployment Script
-        run: npx ts-node ./runner.ts
+        run: node --loader ts-node/esm ./runner.ts
         env:
           INPUT_ADDRESS: ${{ github.event.inputs.address }}
           INPUT_RPCURL: ${{ github.event.inputs.rpcUrl }}
