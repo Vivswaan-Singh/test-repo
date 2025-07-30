@@ -47,7 +47,7 @@ export async function hasMinimumEthBalance(
  * @param {string} weth09Address The WETH09 contract address.
  * @param {string} nativeSymbol The native currency symbol.
  */
-export async function deployContract(address, rpcUrl, weth09Address, nativeSymbol) {
+export async function deployContract(address, rpcUrl, weth09Address, nativeSymbol, networkType) {
     const allowed = await hasMinimumEthBalance(address, rpcUrl);
 
     if (allowed) {
