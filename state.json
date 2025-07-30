@@ -21,6 +21,14 @@
 
       {
         "implementationAddress": "0x5FbE74A283f7954f10AA04C2eDf55578811aeb03"
+      },
+
+      {
+        "implementationAddress": "0x8f10Fff5F75ff5fff928176F3576Ff5054FF68FF"
+      },
+
+      {
+        "implementationAddress": "0x5FbE74A283f7954f10AA99C9eDf99999999aeb99"
       }
     ]
   },
@@ -35,6 +43,10 @@
 
       {
         "implementationAddress": "0x3eDF60dd017aCe33A0220F78741b5581C385A1BA"
+      },
+
+      {
+        "implementationAddress": "0a3aAA60aa017aCa33A0220A78741a5581A385A1AA"
       }
     ]
   },
