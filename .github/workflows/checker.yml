@@ -55,7 +55,7 @@ jobs:
           // to call the deployContract function with the provided inputs.
           // The path to deploy.ts should be relative to where this runner.ts will be executed
           // which is the root of the repository after compilation.
-          import { deployContract } from '../../scripts/deploy';
+          import { deployContract } from '../../../scripts/deploy'; // Corrected path
 
           // Get inputs from environment variables set in the workflow
           const address = process.env.INPUT_ADDRESS!;
@@ -86,3 +86,4 @@ jobs:
           INPUT_RPCURL: ${{ github.event.inputs.rpcUrl }}
           INPUT_WETH09ADDRESS: ${{ github.event.inputs.weth09Address }}
           INPUT_NATIVESYMBOL: ${{ github.event.inputs.nativeSymbol }}
+
