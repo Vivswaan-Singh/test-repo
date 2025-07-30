@@ -1,0 +1,47 @@
+{
+  "Holesky": {
+    "chainId": 17000,
+
+    "contracts": [
+      {
+        "implementationAddress": "0x94373a4919B3240D86eA41593D5eBa789FEF3848"
+      },
+
+      {
+        "implementationAddress": "0x59225B2926D91Fb0AF0B075ef67cD1f33B82200D"
+      },
+
+      {
+        "implementationAddress": "0x8f10Fba5D75ad5fbd928176E3576bB5054EE68ED"
+      },
+
+      {
+        "implementationAddress": "0x5FbE74A283f7954f10AA04C2eDf55578811aeb03"
+      }
+    ]
+  },
+
+  "Sepolia": {
+    "chainId": 11155111,
+
+    "contracts": [
+      {
+        "implementationAddress": "0x5FbE74A283f7954f10AA04C2eDf55578811aeb03"
+      },
+
+      {
+        "implementationAddress": "0x3eDF60dd017aCe33A0220F78741b5581C385A1BA"
+      }
+    ]
+  },
+
+  "Hoodi": {
+    "chainId": 560048,
+
+    "contracts": [
+      {
+        "implementationAddress": "0xb43981e47288fFF2ac821414C29143DBafF19cE3"
+      }
+    ]
+  }
+}
