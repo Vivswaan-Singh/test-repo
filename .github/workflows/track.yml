@@ -1,0 +1,45 @@
+name: Check state.json Changes
+
+on:
+  push:
+    branches:
+      - main # This workflow will run on pushes to the 'main' branch.
+              # You can change 'main' to your desired branch name if different.
+
+jobs:
+  detect_and_echo_changes:
+    runs-on: ubuntu-latest # The type of runner the job will execute on.
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch at least two commits to compare the current state.json with the previous one.
+          # Without this, git diff HEAD~1 might not work on shallow clones.
+          fetch-depth: 2
+
+      - name: Get diff of state.json
+        id: get_state_json_diff # Assign an ID to this step to reference its outputs.
+        run: |
+          # Compare state.json between the current commit (HEAD) and the previous commit (HEAD~1).
+          # The `|| true` ensures the step doesn't fail if `state.json` was just added
+          # or if it's the very first commit, as `git diff HEAD~1` might error in those cases.
+          # The output of `git diff` (if any) is stored in the DIFF_OUTPUT variable.
+          DIFF_OUTPUT=$(git diff HEAD~1 HEAD -- state.json || true)
+
+          # Set the DIFF_OUTPUT as a step output, allowing subsequent steps to access it.
+          # This uses a multi-line output syntax with `EOF` delimiter.
+          echo "diff_output<<EOF" >> $GITHUB_OUTPUT
+          echo "$DIFF_OUTPUT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Echo changes if state.json was modified
+        # This step will only run if the 'diff_output' from the previous step is not empty.
+        # An empty output means no changes were detected in state.json.
+        if: steps.get_state_json_diff.outputs.diff_output != ''
+        run: |
+          echo "--- Changes Detected in state.json ---"
+          # Echo the captured diff output.
+          echo "${{ steps.get_state_json_diff.outputs.diff_output }}"
+          echo "------------------------------------"
+          # You could add further actions here, like sending a notification or failing the build.
